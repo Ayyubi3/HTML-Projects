@@ -45,7 +45,9 @@ class Block {
 let count = 0;
 //Timesteps calculate the position more often to get better results
 //Euler integration
-const TimeSteps = 1000
+
+//Set time step to 100 and right.mass to the digitcount after the comma u want
+const TimeSteps = 1000000
 
 let left = new Block()
 left.x = 10
@@ -58,7 +60,7 @@ let right = new Block()
 right.x = 100
 right.v = -1 / TimeSteps
 right.size = 100
-right.mass = Math.pow(100, 4)
+right.mass = Math.pow(100, 8)
 right.color = "red"
 
 const animate = () => {
