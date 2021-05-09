@@ -17,10 +17,7 @@
         body {
             margin: 0;
             height: 100%;
-            overflow: hidden
-        }
-
-        body {
+            overflow: hidden;
             background-color: black;
         }
     </style>
@@ -32,6 +29,8 @@
         <input value="10" id="minSize" type="number">
         <p>Maximum Size</p>
         <input value="40" id="maxSize" type="number">
+        <p>Mouse radius</p>
+        <input value="100" id="mouseRadius" type="number">
         <button onclick="changeValues()">recalculate</button>
     </div>
 
@@ -85,6 +84,7 @@
 
         let minSize = 10
         let maxSize = 40
+        let radius = 100
 
         addEventListener('resize', () => {
             canvas.width = innerWidth
@@ -99,7 +99,7 @@
         const changeValues = () => {
             minSize = document.getElementById('minSize').value
             maxSize = document.getElementById('maxSize').value
-            console.log(document.getElementById('minSize').value)
+            radius = document.getElementById('mouseRadius').value
         }
 
 
@@ -137,7 +137,7 @@
                 element.y += element.dy;
 
                 //RESIZE ON MOUSE
-                if (distance(element.x, element.y, mouse.x, mouse.y) < 100) {
+                if (distance(element.x, element.y, mouse.x, mouse.y) < radius) {
                     if (element.radius < maxSize) { element.radius += 3 }
                 } else if (element.radius > minSize) { element.radius -= 1 }
 
