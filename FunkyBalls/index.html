@@ -31,11 +31,80 @@
         <input value="40" id="maxSize" type="number">
         <p>Mouse radius</p>
         <input value="100" id="mouseRadius" type="number">
+        <p>Ball Count</p>
+        <input value="100" id="ballCount" type="number">
         <button onclick="changeValues()">recalculate</button>
     </div>
 
+
     <canvas></canvas>
-    <script>
+    <script class="events">
+        //Button Event
+        const changeValues = () => {
+            minSize = document.getElementById('minSize').value
+            maxSize = document.getElementById('maxSize').value
+            radius = document.getElementById('mouseRadius').value
+
+            if (ballCount === document.getElementById('ballCount').value) {
+                return
+            }
+
+            ballCount = document.getElementById('ballCount').value
+
+            obj.length = 0
+
+            for (let i = 0; i < ballCount; i++) {
+                obj.push(
+                    new Circle(
+                        randomIntWithoutZeroFromRange(20, canvas.width - 30),
+                        randomIntWithoutZeroFromRange(20, canvas.height - 30),
+                        randomIntWithoutZeroFromRange(-1, 1), //dx
+                        randomIntWithoutZeroFromRange(-2, 2), //dy
+                        15, //radius
+                        `rgba(${randomcolorvalue()},${randomcolorvalue()},${randomcolorvalue()},${randomcolorvalue()})`))
+            }
+
+        }
+
+        //Random Events
+        addEventListener('resize', () => {
+            canvas.width = innerWidth
+            canvas.height = innerHeight
+        })
+
+        addEventListener('mousemove', (event) => {
+            mouse.x = event.clientX
+            mouse.y = event.clientY
+        })
+
+
+        // Execute a function when the user releases a key on the keyboard
+        document.addEventListener("keyup", function (event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+                // Cancel the default action, if needed
+                event.preventDefault();
+                // Trigger the button element with a click
+                document.querySelector("button").click();
+            }
+        });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script class="HelperFunctionsandClass">
+
+        // Helper Functions
         function randomIntWithoutZeroFromRange(min, max) {
             let out = Math.floor(Math.random() * (max - min + 1) + min)
             if (out === 0) { out = randomIntWithoutZeroFromRange(min, max) }
@@ -48,8 +117,9 @@
 
             return Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2))
         }
-    </script>
-    <script>
+
+
+        //Class
         class Circle {
             constructor(x, y, dx, dy, radius, color) {
                 this.x = x
@@ -70,7 +140,24 @@
             }
         }
     </script>
-    <script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script class="Logic">
+
+
+
         const canvas = document.querySelector("canvas")
         const c = canvas.getContext('2d')
 
@@ -85,27 +172,14 @@
         let minSize = 10
         let maxSize = 40
         let radius = 100
-
-        addEventListener('resize', () => {
-            canvas.width = innerWidth
-            canvas.height = innerHeight
-        })
-
-        addEventListener('mousemove', (event) => {
-            mouse.x = event.clientX
-            mouse.y = event.clientY
-        })
-
-        const changeValues = () => {
-            minSize = document.getElementById('minSize').value
-            maxSize = document.getElementById('maxSize').value
-            radius = document.getElementById('mouseRadius').value
-        }
+        let ballCount = 1000
 
 
+        //Create Circle
         let obj = []
         const randomcolorvalue = () => randomIntWithoutZeroFromRange(1, 255)
-        for (let i = 0; i < 1000; i++) {
+
+        for (let i = 0; i < ballCount; i++) {
             obj.push(
                 new Circle(
                     randomIntWithoutZeroFromRange(20, canvas.width - 30),
@@ -116,6 +190,8 @@
                     `rgba(${randomcolorvalue()},${randomcolorvalue()},${randomcolorvalue()},${randomcolorvalue()})`))
         }
 
+
+        // Animationloop
         const animate = () => {
             requestAnimationFrame(animate)
 
