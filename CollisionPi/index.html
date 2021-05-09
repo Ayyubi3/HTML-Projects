@@ -22,7 +22,7 @@
 </head>
 
 <body>
-    <div class="" style="text-align: center;">
+    <div style="text-align: center;">
 
         <div class="collisions">
             <p>Kollisionen</p>
@@ -47,14 +47,15 @@
     <canvas></canvas>
     <script>
         window.addEventListener('resize', function () {
-            canvas.width = innerWidth;
+            canvas.width = innerWidth
             canvas.height = 400
         })
 
 
         const canvas = document.querySelector("canvas")
         const ctx = canvas.getContext('2d')
-        canvas.width = innerWidth;
+
+        canvas.width = innerWidth
         canvas.height = 400
 
         const counter = document.getElementById('counter')
@@ -63,13 +64,13 @@
 
         class Block {
             constructor(x, velocity, size, mass, color) {
-                this.x = x;
+                this.x = x
                 this.y = 100
                 this.v = velocity
-                this.size = size;
+                this.size = size
                 this.mass = mass
 
-                this.color = color;
+                this.color = color
             }
 
             update() {
@@ -78,9 +79,9 @@
 
             collide(other) {
                 if (this.x + this.size < other.x || this.x > other.x + other.size) {
-                    return true;
+                    return true
                 }
-                return false;
+                return false
             }
             bounce(other) {
                 let sumM = this.mass + other.mass
@@ -89,11 +90,11 @@
                 return newV
             }
             draw() {
-                ctx.beginPath();
-                ctx.rect(this.x, this.y, this.size, this.size);
+                ctx.beginPath()
+                ctx.rect(this.x, this.y, this.size, this.size)
                 ctx.fillStyle = this.color
                 ctx.fill()
-                ctx.closePath();
+                ctx.closePath()
             }
 
 
@@ -114,7 +115,7 @@
 
         }
 
-        let count = 0;
+        let count = 0
         //Timesteps calculate the position more often to get better results
         //Euler integration
 
@@ -167,12 +168,12 @@
                 right.update()
             }
 
-            left.draw();
-            right.draw();
+            left.draw()
+            right.draw()
 
         }
 
-        animate();
+        animate()
     </script>
 
 </body>
