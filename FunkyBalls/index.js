@@ -22,6 +22,12 @@ addEventListener('mousemove', (event) => {
     mouse.y = event.clientY
 })
 
+const changeValues = () => {
+    minSize = document.getElementById('minSize').value
+    maxSize = document.getElementById('maxSize').value
+    console.log(document.getElementById('minSize').value)
+}
+
 
 let obj = []
 const randomcolorvalue = () => randomIntWithoutZeroFromRange(1, 255)

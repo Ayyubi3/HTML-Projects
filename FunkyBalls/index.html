@@ -10,12 +10,23 @@
         * {
             margin: 0;
             padding: 0;
+        }
+
+        body {
             background-color: black;
         }
     </style>
 </head>
 
 <body>
+    <div style="position: absolute;">
+        <p>Minimum Size</p>
+        <input value="10" id="minSize" type="number">
+        <p>Maximum Size</p>
+        <input value="40" id="maxSize" type="number">
+        <button onclick="changeValues()">recalculate</button>
+    </div>
+
     <canvas></canvas>
     <script src="HelperFunctions.js"></script>
     <script src="Circle.js"></script>
