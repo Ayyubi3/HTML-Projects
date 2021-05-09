@@ -36,9 +36,118 @@
     </div>
 
     <canvas></canvas>
-    <script src="HelperFunctions.js"></script>
-    <script src="Circle.js"></script>
-    <script src="index.js"></script>
+    <script>
+        function randomIntWithoutZeroFromRange(min, max) {
+            let out = Math.floor(Math.random() * (max - min + 1) + min)
+            if (out === 0) { out = randomIntWithoutZeroFromRange(min, max) }
+            return out
+        }
+
+        function distance(x1, y1, x2, y2) {
+            const xDist = x2 - x1
+            const yDist = y2 - y1
+
+            return Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2))
+        }
+    </script>
+    <script>
+        class Circle {
+            constructor(x, y, dx, dy, radius, color) {
+                this.x = x
+                this.y = y
+
+                this.dx = dx
+                this.dy = dy
+
+                this.radius = radius
+                this.color = color
+            }
+            draw() {
+                c.beginPath()
+                c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+                c.fillStyle = this.color
+                c.fill()
+                c.closePath()
+            }
+        }
+    </script>
+    <script>
+        const canvas = document.querySelector("canvas")
+        const c = canvas.getContext('2d')
+
+        canvas.width = innerWidth;
+        canvas.height = innerHeight;
+
+        const mouse = {
+            x: undefined,
+            y: undefined
+        }
+
+        let minSize = 10
+        let maxSize = 40
+
+        addEventListener('resize', () => {
+            canvas.width = innerWidth
+            canvas.height = innerHeight
+        })
+
+        addEventListener('mousemove', (event) => {
+            mouse.x = event.clientX
+            mouse.y = event.clientY
+        })
+
+        const changeValues = () => {
+            minSize = document.getElementById('minSize').value
+            maxSize = document.getElementById('maxSize').value
+            console.log(document.getElementById('minSize').value)
+        }
+
+
+        let obj = []
+        const randomcolorvalue = () => randomIntWithoutZeroFromRange(1, 255)
+        for (let i = 0; i < 1000; i++) {
+            obj.push(
+                new Circle(
+                    randomIntWithoutZeroFromRange(20, canvas.width - 30),
+                    randomIntWithoutZeroFromRange(20, canvas.height - 30),
+                    randomIntWithoutZeroFromRange(-1, 1), //dx
+                    randomIntWithoutZeroFromRange(-2, 2), //dy
+                    15, //radius
+                    `rgba(${randomcolorvalue()},${randomcolorvalue()},${randomcolorvalue()},${randomcolorvalue()})`))
+        }
+
+        const animate = () => {
+            requestAnimationFrame(animate)
+
+            c.clearRect(0, 0, canvas.width, canvas.height)
+
+
+            obj.forEach(element => {
+                //VELOCITY
+                if (element.x + element.radius > canvas.width ||
+                    element.x - element.radius < 0) {
+                    element.dx = -element.dx
+                }
+                if (element.y + element.radius > canvas.height ||
+                    element.y - element.radius < 0) {
+                    element.dy = -element.dy
+                }
+
+                element.x += element.dx;
+                element.y += element.dy;
+
+                //RESIZE ON MOUSE
+                if (distance(element.x, element.y, mouse.x, mouse.y) < 100) {
+                    if (element.radius < maxSize) { element.radius += 3 }
+                } else if (element.radius > minSize) { element.radius -= 1 }
+
+                element.draw()
+            })
+
+        }
+
+        animate();
+    </script>
 </body>
 
 </html>
